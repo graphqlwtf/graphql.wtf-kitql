@@ -1,38 +1,39 @@
-<script lang="ts">
-  import { onMount } from "svelte";
+<script context="module" lang="ts">
   import {
     KQL_GetCartBydId,
     KQL_RemoveFromCart,
   } from "$lib/graphql/_kitql/graphqlStores";
   import type { RemoveCartItemInput } from "$lib/graphql/_kitql/graphqlTypes";
-  import { cartId } from "$lib/stores/cart-id";
 
-  onMount(async () => {
-    await KQL_GetCartBydId.query({
-      fetch,
-      variables: {
-        id: $cartId,
+  export async function load({ session }) {
+    return {
+      props: {
+        kitqlCartId: session.kitqlCartId,
       },
-    });
-  });
+    };
+  }
+</script>
 
-  const removeFromCart = async (id: RemoveCartItemInput["id"]) => {
+<script lang="ts">
+  export let kitqlCartId: string;
+
+  const removeFromCart = async (input: RemoveCartItemInput) => {
+    // patch with optimistic data
+    const optiData = $KQL_GetCartBydId.data;
+    optiData.cart.subTotal.formatted = `Removing items...`;
+    KQL_GetCartBydId.patch(optiData, { id: kitqlCartId }, "store-only");
+
+    // send mutation
     const { data } = await KQL_RemoveFromCart.mutate({
       variables: {
-        input: {
-          cartId: $cartId,
-          id,
-        },
+        input,
       },
     });
 
+    // patch with real data
     KQL_GetCartBydId.patch(
-      {
-        cart: data.removeItem,
-      },
-      {
-        id: $cartId,
-      },
+      { cart: data.removeItem },
+      { id: kitqlCartId },
       "cache-and-store"
     );
   };
@@ -63,8 +64,11 @@
             {item.name}
           </p>
           <button
-            class="bg-orange-500 text-white font-medium px-3 py-2.5 rounded-md hover:bg-orange-600 transition"
-            on:click={() => removeFromCart(item.id)}>&times; Remove</button
+            disabled={$KQL_RemoveFromCart.isFetching}
+            class="bg-orange-500 disabled:bg-slate-400 text-white font-medium px-3 py-2.5 rounded-md hover:bg-orange-600 transition"
+            on:click={() =>
+              removeFromCart({ cartId: kitqlCartId, id: item.id })}
+            >&times; Remove</button
           >
         </div>
       </li>

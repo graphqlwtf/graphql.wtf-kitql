@@ -7,4 +7,6 @@ export const kitQLClient = new KitQLClient({
   credentials: "omit",
   headersContentType: "application/json",
   logType: ["client", "server", "operationAndvariables"],
+  // endpointSSRDelayMs: 500, // nice to demo delay in SSR mode
+  // endpointNetworkDelayMs: 1000, // Nice to demo delay in Network mode
 });

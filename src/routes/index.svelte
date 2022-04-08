@@ -1,42 +1,42 @@
 <script context="module" lang="ts">
-  import products from "../products.json";
-
-  export const load = async () => {
-    return {
-      props: {
-        products,
-      },
-    };
-  };
-</script>
-
-<script lang="ts">
   import {
     KQL_AddToCart,
     KQL_GetCartBydId,
   } from "$lib/graphql/_kitql/graphqlStores";
   import type { AddToCartInput } from "$lib/graphql/_kitql/graphqlTypes";
-  import { cartId } from "$lib/stores/cart-id";
+  import productJson from "../products.json";
 
-  type CartItem = Pick<AddToCartInput, "id" | "name" | "price" | "images">;
+  export async function load({ session }) {
+    return {
+      props: {
+        kitqlCartId: session.kitqlCartId,
+        products: productJson,
+      },
+    };
+  }
+</script>
 
-  const addToCart = async (input: CartItem) => {
+<script lang="ts">
+  export let kitqlCartId: string;
+  export let products: any;
+
+  const addToCart = async (input: AddToCartInput) => {
+    // patch with optimistic data
+    const optiData = $KQL_GetCartBydId.data;
+    optiData.cart.subTotal.formatted = `Adding $${input.price}...`;
+    KQL_GetCartBydId.patch(optiData, { id: kitqlCartId }, "store-only");
+
+    // send mutation
     const { data } = await KQL_AddToCart.mutate({
       variables: {
-        input: {
-          cartId: $cartId,
-          ...input,
-        },
+        input,
       },
     });
 
+    // patch with real data
     KQL_GetCartBydId.patch(
-      {
-        cart: data.addItem,
-      },
-      {
-        id: $cartId,
-      },
+      { cart: data.addItem },
+      { id: kitqlCartId },
       "cache-and-store"
     );
   };
@@ -57,9 +57,11 @@
         {product.name}
       </p>
       <button
-        class="bg-orange-500 text-white font-medium px-3 py-2.5 rounded-md w-full hover:bg-orange-600 transition"
+        disabled={$KQL_AddToCart.isFetching}
+        class="bg-orange-500 disabled:bg-slate-400 text-white font-medium px-3 py-2.5 rounded-md w-full hover:bg-orange-600 transition"
         on:click={() =>
           addToCart({
+            cartId: kitqlCartId,
             id: product.id,
             name: product.name,
             price: product.price,
