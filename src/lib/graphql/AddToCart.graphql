@@ -1,21 +1,21 @@
 mutation AddToCart($input: AddToCartInput!) {
-	addItem(input: $input) {
-		id
-		totalItems
-		totalUniqueItems
-		subTotal {
-			formatted
-		}
-		items {
-			id
-			name
-			images
-			lineTotal {
-				formatted
-			}
-			unitTotal {
-				formatted
-			}
-		}
-	}
+  addItem(input: $input) {
+    id
+    totalItems
+    totalUniqueItems
+    subTotal {
+      formatted
+    }
+    items {
+      id
+      name
+      images
+      lineTotal {
+        formatted
+      }
+      unitTotal {
+        formatted
+      }
+    }
+  }
 }

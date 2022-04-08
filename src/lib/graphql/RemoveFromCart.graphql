@@ -1,21 +1,21 @@
 mutation RemoveFromCart($input: RemoveCartItemInput!) {
-	removeItem(input: $input) {
-		id
-		totalItems
-		totalUniqueItems
-		subTotal {
-			formatted
-		}
-		items {
-			id
-			name
-			images
-			lineTotal {
-				formatted
-			}
-			unitTotal {
-				formatted
-			}
-		}
-	}
+  removeItem(input: $input) {
+    id
+    totalItems
+    totalUniqueItems
+    subTotal {
+      formatted
+    }
+    items {
+      id
+      name
+      images
+      lineTotal {
+        formatted
+      }
+      unitTotal {
+        formatted
+      }
+    }
+  }
 }

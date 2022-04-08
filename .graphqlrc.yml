@@ -2,7 +2,7 @@ projects:
   default:
     schema: ${VITE_GRAPHQL_ENDPOINT}
     documents:
-      - '**/*.{graphql,gql}'
+      - "**/*.{graphql,gql}"
     extensions:
       endpoints:
         default:
@@ -17,7 +17,7 @@ projects:
               - typescript-document-nodes
           ./src/lib/graphql/_kitql/graphqlStores.ts:
             plugins:
-              - '@kitql/graphql-codegen'
+              - "@kitql/graphql-codegen"
             config:
               importBaseTypesFrom: $lib/graphql/_kitql/graphqlTypes
 
