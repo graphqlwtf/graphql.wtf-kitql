@@ -2,7 +2,7 @@
   import "../app.css";
   import { onMount } from "svelte";
   import { KQL_GetCartBydId } from "$lib/graphql/_kitql/graphqlStores";
-  import { cartId } from "../stores/cart-id";
+  import { cartId } from "$lib/stores/cart-id";
 
   onMount(async () => {
     await KQL_GetCartBydId.query({

@@ -5,7 +5,7 @@
     KQL_RemoveFromCart,
   } from "$lib/graphql/_kitql/graphqlStores";
   import type { RemoveCartItemInput } from "$lib/graphql/_kitql/graphqlTypes";
-  import { cartId } from "../stores/cart-id";
+  import { cartId } from "$lib/stores/cart-id";
 
   onMount(async () => {
     await KQL_GetCartBydId.query({

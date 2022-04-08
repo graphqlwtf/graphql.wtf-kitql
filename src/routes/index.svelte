@@ -16,7 +16,7 @@
     KQL_GetCartBydId,
   } from "$lib/graphql/_kitql/graphqlStores";
   import type { AddToCartInput } from "$lib/graphql/_kitql/graphqlTypes";
-  import { cartId } from "../stores/cart-id";
+  import { cartId } from "$lib/stores/cart-id";
 
   type CartItem = Pick<AddToCartInput, "id" | "name" | "price" | "images">;
 
