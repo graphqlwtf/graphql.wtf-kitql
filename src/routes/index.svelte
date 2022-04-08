@@ -13,6 +13,7 @@
 <script lang="ts">
 	import { KQL_AddToCart, KQL_GetCartBydId } from '$lib/graphql/_kitql/graphqlStores';
 	import type { AddToCartInput } from '$lib/graphql/_kitql/graphqlTypes';
+	import { cartId } from '../stores/cart-id';
 
 	type CartItem = Pick<AddToCartInput, 'id' | 'name' | 'price' | 'images'>;
 
@@ -20,23 +21,18 @@
 		const { data } = await KQL_AddToCart.mutate({
 			variables: {
 				input: {
-					cartId: '9fd34599-fecd-4a6f-9d25-e8a16255b612',
+					cartId: $cartId,
 					...input
 				}
 			}
 		});
 
-		// const cart = await $KQL_GetCartBydId.data;
-
-		// cart.cart.items = result.data.addItem.items
-
-		// KQL_GetCartBydId.patch(result.data.addItem);
 		KQL_GetCartBydId.patch(
 			{
 				cart: data.addItem
 			},
 			{
-				id: '9fd34599-fecd-4a6f-9d25-e8a16255b612'
+				id: $cartId
 			},
 			'cache-and-store'
 		);
@@ -61,7 +57,6 @@
 				class="bg-orange-500 text-white font-medium px-3 py-2.5 rounded-md w-full hover:bg-orange-600 transition"
 				on:click={() =>
 					addToCart({
-						cartId: '9fd34599-fecd-4a6f-9d25-e8a16255b612',
 						id: product.id,
 						name: product.name,
 						price: product.price,
