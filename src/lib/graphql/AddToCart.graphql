@@ -8,6 +8,8 @@ mutation AddToCart($input: AddToCartInput!) {
 		}
 		items {
 			id
+			name
+			images
 			lineTotal {
 				formatted
 			}

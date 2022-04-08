@@ -40,11 +40,11 @@
 <div class="text-center space-y-1.5 mb-12">
 	<h1 class="text-5xl font-black text-orange-500 uppercase">Cart</h1>
 	<p class="text-xl text-gray-500">
-		{cart?.totalItems ?? 0} items: {cart?.subTotal?.formatted}
+		{cart?.totalItems ?? 0} items &mdash; {cart?.subTotal?.formatted ?? ''}
 	</p>
 </div>
 
-{#if cart?.totalItems || 0 >= 1}
+{#if (cart?.totalItems || 0) >= 1}
 	<ul class="grid gap-6">
 		{#each cart.items as item}
 			<li

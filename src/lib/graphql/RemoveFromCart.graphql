@@ -8,6 +8,8 @@ mutation RemoveFromCart($input: RemoveCartItemInput!) {
 		}
 		items {
 			id
+			name
+			images
 			lineTotal {
 				formatted
 			}
