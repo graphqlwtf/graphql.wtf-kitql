@@ -1,21 +1,5 @@
 query GetCartBydId($id: ID!) {
   cart(id: $id) {
-    id
-    totalItems
-    totalUniqueItems
-    subTotal {
-      formatted
-    }
-    items {
-      id
-      name
-      images
-      lineTotal {
-        formatted
-      }
-      unitTotal {
-        formatted
-      }
-    }
+    ...CartInfo
   }
 }
