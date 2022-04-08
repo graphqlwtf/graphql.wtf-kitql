@@ -1,0 +1,19 @@
+mutation AddToCart($input: AddToCartInput!) {
+	addItem(input: $input) {
+		id
+		totalItems
+		totalUniqueItems
+		subTotal {
+			formatted
+		}
+		items {
+			id
+			lineTotal {
+				formatted
+			}
+			unitTotal {
+				formatted
+			}
+		}
+	}
+}

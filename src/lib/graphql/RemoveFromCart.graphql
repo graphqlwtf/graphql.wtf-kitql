@@ -1,0 +1,19 @@
+mutation RemoveFromCart($input: RemoveCartItemInput!) {
+	removeItem(input: $input) {
+		id
+		totalItems
+		totalUniqueItems
+		subTotal {
+			formatted
+		}
+		items {
+			id
+			lineTotal {
+				formatted
+			}
+			unitTotal {
+				formatted
+			}
+		}
+	}
+}

@@ -1,0 +1,29 @@
+[
+	{
+		"id": "e11290d6-f93f-43b4-bc64-ed5a73595b80",
+		"slug": "t-shirt",
+		"name": "T-Shirt",
+		"image": {
+			"url": "https://media.graphassets.com/O7nvf9MET2WaxrkIBHK0"
+		},
+		"price": 3525
+	},
+	{
+		"id": "c4bfd7c7-7d2b-415e-9ae7-51f42fc7feb0",
+		"slug": "cap",
+		"name": "Cap",
+		"image": {
+			"url": "https://media.graphassets.com/b0Jiu9aTpqaGHlcSPOUr"
+		},
+		"price": 1250
+	},
+	{
+		"id": "3bba03af-2566-4e4d-8590-42f77e59f1a1",
+		"slug": "bag",
+		"name": "Bag",
+		"image": {
+			"url": "https://media.graphassets.com/Jfx0zfu4RXu8MilRFZhc"
+		},
+		"price": 1000
+	}
+]
