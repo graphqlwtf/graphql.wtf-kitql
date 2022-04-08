@@ -8,3 +8,7 @@ declare namespace App {
   // interface Session {}
   // interface Stuff {}
 }
+
+interface ImportMetaEnv {
+  readonly VITE_GRAPHQL_ENDPOINT: string;
+}
